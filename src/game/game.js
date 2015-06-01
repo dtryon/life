@@ -91,6 +91,11 @@ Game.prototype.nextFrame = function () {
 			}
 		};
 	};
-
 };
+
+var gameFactory = function(size) {
+	return new Game(size);
+}
+
+exports.create = gameFactory;
 
