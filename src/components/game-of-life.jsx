@@ -38,7 +38,9 @@ var Grid = React.createClass({displayName: 'Grid',
 	    return (
 	      <div className="game">
 	        <table className="grid">
-	        	{rows}
+	        	<tbody>
+	        		{rows}
+	        	</tbody>
 	        </table>
 	      </div>
 	    );
