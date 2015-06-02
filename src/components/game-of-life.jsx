@@ -23,14 +23,17 @@ var GameControl = React.createClass({displayName: 'GameControl',
 });
 
 var Grid = React.createClass({displayName: 'Grid',
+	cellClick: function(x, y) {
+		this.props.onCellClick(x, y);
+	},
 	render: function() {
-		var columns = [];
-		for (var i = 0; i < this.props.size; i++) {
-			columns.push(<td className="grid-column"></td>);
-		}
-
 		var rows = [];
-		for (var i = 0; i < this.props.size; i++) {
+		for (var x = 0; x < this.props.data.length; x++) {
+			var columns = [];
+			for (var y = 0; y < this.props.data[x].length; y++) {
+				var cellClassString = this.props.data[x][y] ? "grid-column-set" : "grid-column";
+				columns.push(<td className={cellClassString} onClick={this.cellClick.bind(this,x,y)}></td>);
+			}
 			rows.push(<tr className="grid-row">
 		        		{columns}
 		        	  </tr>);
@@ -50,18 +53,20 @@ var Grid = React.createClass({displayName: 'Grid',
 var GameOfLife = React.createClass({displayName: 'GameOfLife',
   getInitialState: function() {
   	var game = Game.create(10);
-  	console.log(game);
     return {game: game, size: 10, speed: 1000};
   },
   settingsChanged: function(settings) {
   	var game = Game.create(settings.size);
-  	console.log(game);
   	this.setState({game: game, size: settings.size, speed: settings.speed});
+  },
+  cellClicked: function(x, y) {
+  	this.state.game.setCell(x, y);
+  	this.setState({game: this.state.game});
   },
   render: function() {
     return (
       <div className="main">
-        <Grid data={this.state.game.grid()} size={this.state.size} speed={this.state.speed} />
+        <Grid data={this.state.game.grid()} onCellClick={this.cellClicked} size={this.state.size} speed={this.state.speed} />
         <GameControl size={this.state.size} speed={this.state.speed} onChangeSettings={this.settingsChanged} />
       </div>
     );

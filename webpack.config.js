@@ -1,13 +1,25 @@
+var webpack = require('webpack');
+
 module.exports = {
     context: __dirname + "/src",
-    entry: "./components/game-of-life.jsx",
-    output: {
-        path: __dirname + "/src/dist",
-        filename: "bundle.js"
+    entry: {
+        app: ['webpack-dev-server/client?http://localhost:3000',
+          'webpack/hot/only-dev-server',
+          './components/game-of-life.jsx'
+        ]
     },
+    output: {
+        path: __dirname + "/dist",
+        filename: "bundle.js",
+        publicPath: "/assets/"
+    },
+    plugins: [  
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
+    ],
     module: {
         loaders: [
-            { test: /\.jsx$/, loader: "jsx-loader" }
+            { test: /\.jsx$/, loaders: ["react-hot", "jsx-loader"] }
         ]
     }
 }
