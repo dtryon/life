@@ -10,13 +10,19 @@ var GameControl = React.createClass({displayName: 'GameControl',
 
 		this.props.onChangeSettings({size:size, speed:speed});
 	},
+	start: function() {
+		this.props.start();
+	},
+	clear: function() {
+		this.props.clear();
+	},
 	render: function() {
 	    return (
 	      <div className="game-control">
 	      	<input type="text" placeholder="size" onChange={this.handleChange} value={this.props.size} ref="size" />
 	        <input type="text" placeholder="speed" onChange={this.handleChange} value={this.props.speed} ref="speed" />
-	        <button>Start</button><br/>
-	        <button>Clear</button>
+	        <button onClick={this.start}>Start</button><br/>
+	        <button onClick={this.clear}>Clear</button>
 	      </div>
 	    );
   }
@@ -63,11 +69,27 @@ var GameOfLife = React.createClass({displayName: 'GameOfLife',
   	this.state.game.setCell(x, y);
   	this.setState({game: this.state.game});
   },
+  startGame: function() {
+  	if (this.state.startedId) {
+  		clearInterval(this.state.startedId);
+  		this.setState({startedId: null});
+  	} else {
+  		var startedId = setInterval(function() {
+  			this.state.game.nextFrame();
+  			this.setState({game: this.state.game});
+  		}.bind(this), this.state.speed);
+  		this.setState({game: this.state.game, startedId: startedId});
+  	}
+  },
+  clearGrid: function() {
+  	var game = Game.create(this.state.size);
+    this.setState({game: game});
+  },
   render: function() {
     return (
       <div className="main">
         <Grid data={this.state.game.grid()} onCellClick={this.cellClicked} size={this.state.size} speed={this.state.speed} />
-        <GameControl size={this.state.size} speed={this.state.speed} onChangeSettings={this.settingsChanged} />
+        <GameControl size={this.state.size} speed={this.state.speed} onChangeSettings={this.settingsChanged} start={this.startGame} clear={this.clearGrid} />
       </div>
     );
   }
