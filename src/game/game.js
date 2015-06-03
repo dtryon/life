@@ -97,5 +97,7 @@ var gameFactory = function(size) {
 	return new Game(size);
 }
 
-exports.create = gameFactory;
+if (typeof exports !== 'undefined') {
+	exports.create = gameFactory;
+}
 

@@ -1,5 +1,11 @@
-.main {
-	
+input {
+	width: 90px;
+	margin: 2px;
+}
+
+button {
+	margin-top: 5px;
+	margin-right: 5px;
 }
 
 .game {
@@ -15,6 +21,11 @@
 	background-color: #CCC;
 	width: 150px;
 	vertical-align: top;
+}
+
+.text-box-label {
+	font-family: "Lucida Sans", sans-serif;
+	font-size: .8em;
 }
 
 .grid-row {
