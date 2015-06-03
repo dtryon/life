@@ -100,4 +100,3 @@ var gameFactory = function(size) {
 if (typeof exports !== 'undefined') {
 	exports.create = gameFactory;
 }
-
