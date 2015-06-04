@@ -116,7 +116,7 @@ var Game = (function () {
 			setAcorn: setAcorn,
 			nextFrame: nextFrame
 		};
-	}
+	};
 
 })();
 

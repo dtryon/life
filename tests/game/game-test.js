@@ -15,7 +15,7 @@ describe('Game of Life', function () {
 		game = Game(30);
 	});
 
-	it('should create a new 10 x 10 grid', function () {
+	it('should create a new 30 x 30 grid', function () {
 		expect(game.grid().length).toBe(30);
 		expect(game.grid()[0].length).toBe(30);
 	});
