@@ -23,24 +23,24 @@ button {
 	vertical-align: top;
 }
 
-.text-box-label {
+.label {
 	font-family: "Lucida Sans", sans-serif;
 	font-size: .8em;
 }
 
 .grid-row {
-	height: 20px;
+	height: 10px;
 }
 
 .grid-column {
-	height: 20px;
-	width: 20px;
+	height: 10px;
+	width: 10px;
 	border: 1px solid black;
 }
 
 .grid-column-set {
-	height: 20px;
-	width: 20px;
+	height: 10px;
+	width: 10px;
 	border: 1px solid black;
 	background-color: black;
 }

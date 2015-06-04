@@ -18,15 +18,20 @@ var GameControl = React.createClass({displayName: 'GameControl',
 	clear: function() {
 		this.props.clear();
 	},
+	setAcorn: function() {
+		this.props.setAcorn();
+	},
 	render: function() {
 		var startButtonLabel = this.props.started ? "Stop" : "Start";
 	    return (
 	      <div className="game-control">
 	      	<legend>
-		      	<span className="text-box-label">Size:</span> <input type="text" placeholder="size" onChange={this.sizeChanged} value={this.props.size} ref="size" />
-		        <span className="text-box-label">Speed:</span> <input type="text" placeholder="speed" onChange={this.speedChanged} value={this.props.speed} ref="speed" />
+		      	<span className="label">Size:</span> <input type="text" placeholder="size" onChange={this.sizeChanged} value={this.props.size} ref="size" />
+		        <span className="label">Speed:</span> <input type="text" placeholder="speed" onChange={this.speedChanged} value={this.props.speed} ref="speed" />
 		        <button onClick={this.start}>{startButtonLabel}</button>
 		        <button onClick={this.clear}>Clear</button>
+		        <br/>
+		        <button onClick={this.setAcorn}>Acorn</button>
 	        </legend>
 	      </div>
 	    );
@@ -43,9 +48,9 @@ var Grid = React.createClass({displayName: 'Grid',
 			var columns = [];
 			for (var y = 0; y < this.props.data[x].length; y++) {
 				var cellClassString = this.props.data[x][y] ? "grid-column-set" : "grid-column";
-				columns.push(<td className={cellClassString} onClick={this.cellClick.bind(this,x,y)}></td>);
+				columns.push(<td className={cellClassString} onClick={this.cellClick.bind(this,x,y)} key={"column" + y}></td>);
 			}
-			rows.push(<tr className="grid-row">
+			rows.push(<tr className="grid-row" key={"row" + x}>
 		        		{columns}
 		        	  </tr>);
 		}
@@ -56,6 +61,9 @@ var Grid = React.createClass({displayName: 'Grid',
 	        		{rows}
 	        	</tbody>
 	        </table>
+	        <div>
+	        	<span className="label">Generations: {this.props.generationCount}</span>
+	        </div>
 	      </div>
 	    );
   }
@@ -63,12 +71,13 @@ var Grid = React.createClass({displayName: 'Grid',
 
 var GameOfLife = React.createClass({displayName: 'GameOfLife',
   getInitialState: function() {
-  	var game = Game.make(10);
-    return {game: game, size: 10, speed: 1000};
+  	var defaultSize = 30;
+  	var game = Game.make(defaultSize);
+    return {game: game, size: defaultSize, speed: 10};
   },
   sizeChanged: function(size) {
   	var game = Game.make(size);
-  	this.setState({game: game, size: size});
+  	this.setState({game: game, size: size, generationCount: 0});
   },
   speedChanged: function(speed) {
   	this.setState({speed: speed});
@@ -82,28 +91,38 @@ var GameOfLife = React.createClass({displayName: 'GameOfLife',
   		clearInterval(this.state.startedId);
   		this.setState({startedId: null});
   	} else {
+  		var count = 0;
   		var startedId = setInterval(function() {
   			this.state.game.nextFrame();
-  			this.setState({game: this.state.game});
+  			this.setState({game: this.state.game, generationCount: count++});
   		}.bind(this), this.state.speed);
   		this.setState({game: this.state.game, startedId: startedId});
   	}
   },
+  setAcorn: function() {
+  	this.state.game.setAcorn(12, 7);
+  	this.setState({game: this.state.game});
+  },
   clearGrid: function() {
   	var game = Game.make(this.state.size);
-    this.setState({game: game});
+    this.setState({game: game, generationCount: 0});
   },
   render: function() {
     return (
       <div className="main">
-        <Grid data={this.state.game.grid()} onCellClick={this.cellClicked} size={this.state.size} speed={this.state.speed} />
+        <Grid data={this.state.game.grid()} 
+        	onCellClick={this.cellClicked} 
+        	size={this.state.size} 
+        	speed={this.state.speed}
+        	generationCount={this.state.generationCount} />
         <GameControl size={this.state.size}
         	started={!!this.state.startedId} 
         	speed={this.state.speed} 
         	onSizeChanged={this.sizeChanged} 
         	onSpeedChanged={this.speedChanged} 
         	start={this.startGame} 
-        	clear={this.clearGrid} />
+        	clear={this.clearGrid}
+        	setAcorn={this.setAcorn} />
       </div>
     );
   }

@@ -32,6 +32,16 @@ var Game = (function () {
 		};
 	};
 
+	var setAcorn = function (x, y) {
+  		setCell(x, y);
+  		setCell(x, y+1);
+  		setCell(x-2, y+1);
+  		setCell(x-1, y+3);
+  		setCell(x, y+4);
+  		setCell(x, y+5);
+  		setCell(x, y+6);
+	};
+
 	var nextFrame = function () {
 
 		function countRow(row, prevColumn, nextColumn, isNotCurrent) {
@@ -103,6 +113,7 @@ var Game = (function () {
 			setCell: setCell,
 			unSetCell: unSetCell,
 			setCells: setCells,
+			setAcorn: setAcorn,
 			nextFrame: nextFrame
 		};
 	}

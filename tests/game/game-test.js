@@ -12,12 +12,12 @@ describe('Game of Life', function () {
 	var game;
 
 	beforeEach(function () {
-		game = Game(10);
+		game = Game(30);
 	});
 
 	it('should create a new 10 x 10 grid', function () {
-		expect(game.grid().length).toBe(10);
-		expect(game.grid()[0].length).toBe(10);
+		expect(game.grid().length).toBe(30);
+		expect(game.grid()[0].length).toBe(30);
 	});
 
 	it('should set cell', function () {
@@ -136,6 +136,22 @@ describe('Game of Life', function () {
 
 			game.nextFrame();
 			expect(game.grid()[3][3]).toBe(1);
+		});
+	});
+
+	describe('Set common patterns', function () {
+
+		it('should set acorn', function () {
+
+			game.setAcorn(12, 7);
+
+			expect(game.grid()[12][7]).toBe(1);
+			expect(game.grid()[12][8]).toBe(1);
+			expect(game.grid()[10][8]).toBe(1);
+			expect(game.grid()[11][10]).toBe(1);
+			expect(game.grid()[12][11]).toBe(1);
+			expect(game.grid()[12][12]).toBe(1);
+			expect(game.grid()[12][13]).toBe(1);
 		});
 	});
 });
