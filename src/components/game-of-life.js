@@ -109,6 +109,4 @@ var GameOfLife = React.createClass({displayName: 'GameOfLife',
   }
 });
 
-if (typeof module !== 'undefined') {
-	module.exports = GameOfLife;
-}
+module.exports = GameOfLife;

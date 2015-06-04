@@ -22,7 +22,9 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-        'src/dist/**/*.js'
+        'src/dist/**/*.js',
+        'src/components/**/*.js',
+        'src/index.js'
     ],
 
 
