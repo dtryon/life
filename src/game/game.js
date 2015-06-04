@@ -110,5 +110,5 @@ var Game = (function () {
 })();
 
 if (typeof exports !== 'undefined') {
-	exports.create = Game;
+	exports.make = Game;
 }

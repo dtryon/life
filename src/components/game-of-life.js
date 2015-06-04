@@ -63,11 +63,11 @@ var Grid = React.createClass({displayName: 'Grid',
 
 var GameOfLife = React.createClass({displayName: 'GameOfLife',
   getInitialState: function() {
-  	var game = Game.create(10);
+  	var game = Game.make(10);
     return {game: game, size: 10, speed: 1000};
   },
   sizeChanged: function(size) {
-  	var game = Game.create(size);
+  	var game = Game.make(size);
   	this.setState({game: game, size: size});
   },
   speedChanged: function(speed) {
@@ -90,7 +90,7 @@ var GameOfLife = React.createClass({displayName: 'GameOfLife',
   	}
   },
   clearGrid: function() {
-  	var game = Game.create(this.state.size);
+  	var game = Game.make(this.state.size);
     this.setState({game: game});
   },
   render: function() {
@@ -109,7 +109,6 @@ var GameOfLife = React.createClass({displayName: 'GameOfLife',
   }
 });
 
-React.render(
-  <GameOfLife />,
-  document.getElementById('content')
-);
+if (typeof module !== 'undefined') {
+	module.exports = GameOfLife;
+}

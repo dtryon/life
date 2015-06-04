@@ -5,7 +5,7 @@ module.exports = {
     entry: {
         app: ['webpack-dev-server/client?http://localhost:3000',
           'webpack/hot/only-dev-server',
-          './components/game-of-life.jsx'
+          './index.js'
         ]
     },
     output: {
@@ -19,7 +19,8 @@ module.exports = {
     ],
     module: {
         loaders: [
-            { test: /\.jsx$/, loaders: ["react-hot", "babel-loader"] }
+            { test: /\.js$/, loaders: ["react-hot", "babel-loader"], include: __dirname + "/src" },
+            { test: /\.jsx$/, loaders: ["react-hot", "babel-loader"], include: __dirname + "/src" }
         ]
     }
 }
