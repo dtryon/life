@@ -12,7 +12,7 @@ describe('Game of Life', function () {
 	var game;
 
 	beforeEach(function () {
-		game = new Game(10);
+		game = Game(10);
 	});
 
 	it('should create a new 10 x 10 grid', function () {
