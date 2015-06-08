@@ -72,11 +72,11 @@ var Grid = React.createClass({displayName: 'Grid',
 var GameOfLife = React.createClass({displayName: 'GameOfLife',
   getInitialState: function() {
   	var defaultSize = 30;
-  	var game = Game.make(defaultSize);
+  	var game = Game(defaultSize);
     return {game: game, size: defaultSize, speed: 10};
   },
   sizeChanged: function(size) {
-  	var game = Game.make(size);
+  	var game = Game(size);
   	this.setState({game: game, size: size, generationCount: 0});
   },
   speedChanged: function(speed) {
@@ -104,7 +104,7 @@ var GameOfLife = React.createClass({displayName: 'GameOfLife',
   	this.setState({game: this.state.game});
   },
   clearGrid: function() {
-  	var game = Game.make(this.state.size);
+  	var game = Game(this.state.size);
     this.setState({game: game, generationCount: 0});
   },
   render: function() {

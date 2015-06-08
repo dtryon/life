@@ -1,6 +1,6 @@
 'use strict';
 
-var Game = (function () {
+var Game = (function (module) {
 	var _grid;
 
 	var init = function (size) {
@@ -104,7 +104,7 @@ var Game = (function () {
 		};
 	};
 
-	return function (size) {
+	return module.exports = function (size) {
 
 		init(size);
 
@@ -118,8 +118,6 @@ var Game = (function () {
 		};
 	};
 
-})();
-
-if (typeof exports !== 'undefined') {
-	exports.make = Game;
-}
+})((typeof module !== 'undefined')
+	? module
+	: window);
