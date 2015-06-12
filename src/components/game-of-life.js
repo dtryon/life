@@ -4,13 +4,11 @@ var React = require('react'),
 	Game = require("../game/game.js");
 
 var GameControl = React.createClass({displayName: 'GameControl',
-	sizeChanged: function() {
-		var size = React.findDOMNode(this.refs.size).value.trim();
-		this.props.onSizeChanged(size);
+	sizeChanged: function(e) {
+		this.props.onSizeChanged(e.target.value);
 	},
-	speedChanged: function() {
-		var speed = React.findDOMNode(this.refs.speed).value.trim();
-		this.props.onSpeedChanged(speed);
+	speedChanged: function(e) {
+		this.props.onSpeedChanged(e.target.value);
 	},
 	start: function() {
 		this.props.start();
@@ -26,8 +24,8 @@ var GameControl = React.createClass({displayName: 'GameControl',
 	    return (
 	      <div className="game-control">
 	      	<legend>
-		      	<span className="label">Size:</span> <input type="text" placeholder="size" onChange={this.sizeChanged} value={this.props.size} ref="size" />
-		        <span className="label">Speed:</span> <input type="text" placeholder="speed" onChange={this.speedChanged} value={this.props.speed} ref="speed" />
+		      	<span className="label">Size:</span> <input type="text" placeholder="size" onChange={this.sizeChanged} value={this.props.size} />
+		        <span className="label">Speed:</span> <input type="text" placeholder="speed" onChange={this.speedChanged} value={this.props.speed} />
 		        <button onClick={this.start}>{startButtonLabel}</button>
 		        <button onClick={this.clear}>Clear</button>
 		        <br/>
