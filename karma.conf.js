@@ -16,7 +16,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'src/**/*.js',
-      'tests/**/*.js'
+      'tests/game/**/*.js',
+      'tests.webpack.js'
     ],
 
 
@@ -31,21 +32,23 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'src/**/*.js': ['babel'],
-        'tests/**/*.js': ['babel']
+      'tests.webpack.js': [ 'webpack', 'sourcemap' ]
     },
-    babelPreprocessor: {
-      options: {
-        sourceMap: 'inline'
-      },
-      filename: function (file) {
-        return file.originalPath.replace(/\.js$/, '.es5.js');
-      },
-      sourceFileName: function (file) {
-        return file.originalPath;
+
+    webpack: {
+      devtool: 'inline-source-map',
+      module: {
+        loaders: [
+          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
+        ]
       }
     },
 
+    webpackServer: {
+      noInfo: true
+    },
+
+    browserNoActivityTimeout: 30000,
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -72,7 +75,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode
