@@ -1,71 +1,9 @@
 'use strict';
 
 var React = require('react'),
-	Game = require("../game/game.js");
-
-var GameControl = React.createClass({displayName: 'GameControl',
-	sizeChanged: function(e) {
-		this.props.onSizeChanged(e.target.value);
-	},
-	speedChanged: function(e) {
-		this.props.onSpeedChanged(e.target.value);
-	},
-	start: function() {
-		this.props.start();
-	},
-	clear: function() {
-		this.props.clear();
-	},
-	setAcorn: function() {
-		this.props.setAcorn();
-	},
-	render: function() {
-		var startButtonLabel = this.props.started ? "Stop" : "Start";
-	    return (
-	      <div className="game-control">
-	      	<legend>
-		      	<span className="label">Size:</span> <input type="text" placeholder="size" onChange={this.sizeChanged} value={this.props.size} />
-		        <span className="label">Speed:</span> <input type="text" placeholder="speed" onChange={this.speedChanged} value={this.props.speed} />
-		        <button onClick={this.start}>{startButtonLabel}</button>
-		        <button onClick={this.clear}>Clear</button>
-		        <br/>
-		        <button onClick={this.setAcorn}>Acorn</button>
-	        </legend>
-	      </div>
-	    );
-  }
-});
-
-var Grid = React.createClass({displayName: 'Grid',
-	cellClick: function(x, y) {
-		this.props.onCellClick(x, y);
-	},
-	render: function() {
-		var rows = [];
-		for (var x = 0; x < this.props.data.length; x++) {
-			var columns = [];
-			for (var y = 0; y < this.props.data[x].length; y++) {
-				var cellClassString = this.props.data[x][y] ? "grid-column-set" : "grid-column";
-				columns.push(<td className={cellClassString} onClick={this.cellClick.bind(this,x,y)} key={"column" + y}></td>);
-			}
-			rows.push(<tr className="grid-row" key={"row" + x}>
-		        		{columns}
-		        	  </tr>);
-		}
-	    return (
-	      <div className="game">
-	        <table className="grid">
-	        	<tbody>
-	        		{rows}
-	        	</tbody>
-	        </table>
-	        <div>
-	        	<span className="label">Generations: {this.props.generationCount}</span>
-	        </div>
-	      </div>
-	    );
-  }
-});
+	Game = require('../game/game'),
+  Grid = require('./grid'),
+  GameControl = require('./game-control');
 
 var GameOfLife = React.createClass({displayName: 'GameOfLife',
   getInitialState: function() {
